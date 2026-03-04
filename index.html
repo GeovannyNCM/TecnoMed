@@ -110,27 +110,17 @@
       });
     }
 
-    bindCategoryEvents();
-
-    const localProducts = localStorage.getItem(STORAGE_KEY);
-    if (localProducts) {
-      allProducts = JSON.parse(localProducts);
-      renderCategories(allProducts);
-      renderProducts(allProducts);
-    } else {
-      fetch('data/products.json')
-        .then(res => res.json())
-        .then(data => {
-          allProducts = Array.isArray(data) ? data : [];
-          renderCategories(allProducts);
-          renderProducts(allProducts);
-        })
-        .catch(() => {
-          renderCategories([]);
-          emptyStateEl.classList.remove('hidden');
-          emptyStateEl.textContent = 'Error al cargar productos.';
-        });
-    }
+    fetch('data/products.json')
+      .then(res => res.json())
+      .then(data => {
+        allProducts = Array.isArray(data) ? data : [];
+        renderCategories(allProducts);
+        renderProducts(allProducts);
+      })
+      .catch(() => {
+        emptyStateEl.classList.remove('hidden');
+        emptyStateEl.textContent = 'Error al cargar productos.';
+      });
   </script>
 </body>
 </html>
