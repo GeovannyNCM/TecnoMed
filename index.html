@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TecnoMed | Productos</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>TecnoMed</h1>
+    <p>Catálogo de categorías y productos médicos/tecnológicos</p>
+    <a class="admin-link" href="admin.php">Gestionar productos (PHP)</a>
+  </header>
+
+  <main class="container">
+    <section>
+      <h2>Categorías</h2>
+      <div id="categories" class="category-grid"></div>
+    </section>
+
+    <section>
+      <h2>Productos</h2>
+      <div id="products" class="product-grid"></div>
+      <p id="emptyState" class="empty hidden">No hay productos cargados todavía.</p>
+    </section>
+  </main>
+
+  <script>
+    const categoriesEl = document.getElementById('categories');
+    const productsEl = document.getElementById('products');
+    const emptyStateEl = document.getElementById('emptyState');
+    let allProducts = [];
+
+    function renderCategories(products) {
+      const categories = [...new Set(products.map(p => p.category))];
+      categoriesEl.innerHTML = '';
+
+      const allBtn = document.createElement('button');
+      allBtn.textContent = 'Todas';
+      allBtn.className = 'chip active';
+      allBtn.onclick = () => {
+        document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+        allBtn.classList.add('active');
+        renderProducts(allProducts);
+      };
+      categoriesEl.appendChild(allBtn);
+
+      categories.forEach(category => {
+        const btn = document.createElement('button');
+        btn.textContent = category;
+        btn.className = 'chip';
+        btn.onclick = () => {
+          document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+          btn.classList.add('active');
+          renderProducts(allProducts.filter(p => p.category === category));
+        };
+        categoriesEl.appendChild(btn);
+      });
+    }
+
+    function renderProducts(products) {
+      productsEl.innerHTML = '';
+      if (!products.length) {
+        emptyStateEl.classList.remove('hidden');
+        return;
+      }
+      emptyStateEl.classList.add('hidden');
+
+      products.forEach(product => {
+        const card = document.createElement('article');
+        card.className = 'card';
+        card.innerHTML = `
+          <img src="${product.image || 'https://via.placeholder.com/600x400?text=TecnoMed'}" alt="${product.name}" />
+          <h3>${product.name}</h3>
+          <p><strong>Categoría:</strong> ${product.category}</p>
+          <p>${product.description || 'Sin descripción'}</p>
+          <p><strong>Precio:</strong> $${Number(product.price).toFixed(2)}</p>
+          <p><strong>Stock:</strong> ${product.stock}</p>
+        `;
+        productsEl.appendChild(card);
+      });
+    }
+
+    fetch('data/products.json')
+      .then(res => res.json())
+      .then(data => {
+        allProducts = Array.isArray(data) ? data : [];
+        renderCategories(allProducts);
+        renderProducts(allProducts);
+      })
+      .catch(() => {
+        emptyStateEl.classList.remove('hidden');
+        emptyStateEl.textContent = 'Error al cargar productos.';
+      });
+  </script>
+</body>
+</html>
