@@ -1,5 +1,4 @@
 :root {
-  color-scheme: light;
   --bg: #f6f8fc;
   --panel: #ffffff;
   --primary: #0066cc;
@@ -8,6 +7,7 @@
 }
 
 * { box-sizing: border-box; }
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -28,22 +28,6 @@ body {
   padding: 0 1rem;
 }
 
-.split {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 1rem;
-}
-
-.admin-link {
-  display: inline-block;
-  margin-top: 1rem;
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, .7);
-  padding: .5rem .8rem;
-  border-radius: .5rem;
-  text-decoration: none;
-}
-
 .category-grid {
   display: flex;
   flex-wrap: wrap;
@@ -59,7 +43,10 @@ body {
   cursor: pointer;
 }
 
-.chip.active { background: #dbeafe; border-color: #93c5fd; }
+.chip.active {
+  background: #dbeafe;
+  border-color: #93c5fd;
+}
 
 .product-grid {
   display: grid;
@@ -67,7 +54,7 @@ body {
   gap: 1rem;
 }
 
-.card, .stock-item, .form-grid {
+.card {
   background: var(--panel);
   border: 1px solid #e5e7eb;
   border-radius: .8rem;
@@ -81,43 +68,5 @@ body {
   border-radius: .6rem;
 }
 
-.form-grid {
-  display: grid;
-  gap: .8rem;
-}
-
-label { display: grid; gap: .35rem; }
-
-input, select, textarea, button {
-  font: inherit;
-  padding: .55rem;
-  border-radius: .5rem;
-  border: 1px solid #cbd5e1;
-}
-
-button {
-  background: var(--primary);
-  color: #fff;
-  border: none;
-  cursor: pointer;
-}
-
-.stock-list { display: grid; gap: .7rem; }
-.stock-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: .5rem;
-}
-
-.inline-form { display: flex; gap: .5rem; align-items: center; }
-.empty, .msg { color: var(--muted); }
+.empty { color: var(--muted); }
 .hidden { display: none; }
-
-
-.actions-row {
-  display: flex;
-  gap: .6rem;
-  margin-top: .8rem;
-  flex-wrap: wrap;
-}
