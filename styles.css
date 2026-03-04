@@ -113,3 +113,11 @@ button {
 .inline-form { display: flex; gap: .5rem; align-items: center; }
 .empty, .msg { color: var(--muted); }
 .hidden { display: none; }
+
+
+.actions-row {
+  display: flex;
+  gap: .6rem;
+  margin-top: .8rem;
+  flex-wrap: wrap;
+}
