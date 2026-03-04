@@ -3,10 +3,10 @@ $dataFile = __DIR__ . '/data/products.json';
 $uploadsDir = __DIR__ . '/uploads';
 $allowedCategories = [
     'Cuidados',
-    'Diagnóstico',
+    'Diagnostico',
     'Emergencia',
     'Equipos',
-    'Instrumental',
+    'Intrumental',
     'Insumos',
     'Mobiliario',
     'Indumentaria',
