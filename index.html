@@ -27,13 +27,27 @@
   </main>
 
   <script>
+    const BASE_CATEGORIES = [
+      'Cuidados',
+      'Diagnóstico',
+      'Emergencia',
+      'Equipos',
+      'Instrumental',
+      'Insumos',
+      'Mobiliario',
+      'Indumentaria',
+      'Oxigenoterapia'
+    ];
+
     const categoriesEl = document.getElementById('categories');
     const productsEl = document.getElementById('products');
     const emptyStateEl = document.getElementById('emptyState');
     let allProducts = [];
 
     function renderCategories(products) {
-      const categories = [...new Set(products.map(p => p.category))];
+      const extraCategories = [...new Set(products.map(p => p.category).filter(Boolean))]
+        .filter(c => !BASE_CATEGORIES.includes(c));
+      const categories = [...BASE_CATEGORIES, ...extraCategories];
       categoriesEl.innerHTML = '';
 
       const allBtn = document.createElement('button');
@@ -90,6 +104,7 @@
         renderProducts(allProducts);
       })
       .catch(() => {
+        renderCategories([]);
         emptyStateEl.classList.remove('hidden');
         emptyStateEl.textContent = 'Error al cargar productos.';
       });

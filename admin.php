@@ -1,6 +1,17 @@
 <?php
 $dataFile = __DIR__ . '/data/products.json';
 $uploadsDir = __DIR__ . '/uploads';
+$allowedCategories = [
+    'Cuidados',
+    'Diagnóstico',
+    'Emergencia',
+    'Equipos',
+    'Instrumental',
+    'Insumos',
+    'Mobiliario',
+    'Indumentaria',
+    'Oxigenoterapia',
+];
 
 if (!file_exists($uploadsDir)) {
     mkdir($uploadsDir, 0755, true);
@@ -18,7 +29,8 @@ $message = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = trim($_POST['name'] ?? '');
-    $category = trim($_POST['category'] ?? 'General');
+    $rawCategory = trim($_POST['category'] ?? '');
+    $category = in_array($rawCategory, $allowedCategories, true) ? $rawCategory : 'Cuidados';
     $description = trim($_POST['description'] ?? '');
     $price = (float) ($_POST['price'] ?? 0);
     $stock = (int) ($_POST['stock'] ?? 0);
@@ -43,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $products[] = [
             'id' => $id,
             'name' => $name,
-            'category' => $category !== '' ? $category : 'General',
+            'category' => $category,
             'description' => $description,
             'price' => $price,
             'stock' => max(0, $stock),
@@ -99,7 +111,11 @@ if (isset($_GET['update_stock'], $_GET['id'])) {
           <input type="text" name="name" required />
         </label>
         <label>Categoría
-          <input type="text" name="category" placeholder="Ej: Monitores" />
+          <select name="category" required>
+            <?php foreach ($allowedCategories as $categoryOption): ?>
+              <option value="<?= htmlspecialchars($categoryOption) ?>"><?= htmlspecialchars($categoryOption) ?></option>
+            <?php endforeach; ?>
+          </select>
         </label>
         <label>Descripción
           <textarea name="description" rows="3"></textarea>
