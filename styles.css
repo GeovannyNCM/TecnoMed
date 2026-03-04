@@ -1,0 +1,123 @@
+:root {
+  color-scheme: light;
+  --bg: #f6f8fc;
+  --panel: #ffffff;
+  --primary: #0066cc;
+  --text: #1f2937;
+  --muted: #6b7280;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.topbar {
+  background: linear-gradient(120deg, #004fa3, #1b88ff);
+  color: #fff;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 1.5rem auto;
+  padding: 0 1rem;
+}
+
+.split {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1rem;
+}
+
+.admin-link {
+  display: inline-block;
+  margin-top: 1rem;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, .7);
+  padding: .5rem .8rem;
+  border-radius: .5rem;
+  text-decoration: none;
+}
+
+.category-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-bottom: 1rem;
+}
+
+.chip {
+  border: 1px solid #d1d5db;
+  padding: .4rem .8rem;
+  background: #fff;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.chip.active { background: #dbeafe; border-color: #93c5fd; }
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.card, .stock-item, .form-grid {
+  background: var(--panel);
+  border: 1px solid #e5e7eb;
+  border-radius: .8rem;
+  padding: .9rem;
+}
+
+.card img {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+  border-radius: .6rem;
+}
+
+.form-grid {
+  display: grid;
+  gap: .8rem;
+}
+
+label { display: grid; gap: .35rem; }
+
+input, select, textarea, button {
+  font: inherit;
+  padding: .55rem;
+  border-radius: .5rem;
+  border: 1px solid #cbd5e1;
+}
+
+button {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.stock-list { display: grid; gap: .7rem; }
+.stock-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: .5rem;
+}
+
+.inline-form { display: flex; gap: .5rem; align-items: center; }
+.empty, .msg { color: var(--muted); }
+.hidden { display: none; }
+
+
+.actions-row {
+  display: flex;
+  gap: .6rem;
+  margin-top: .8rem;
+  flex-wrap: wrap;
+}
