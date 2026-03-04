@@ -24,16 +24,19 @@ Luego abre:
 - `http://localhost:8000/index.html`
 - `http://localhost:8000/admin.php`
 
-## Deploy en InfinityFree (resumen)
+## Deploy en InfinityFree (recomendado)
 
-1. Entra a **File Manager** desde el panel de InfinityFree.
-2. Sube el proyecto completo dentro de `htdocs/`.
-3. Verifica que existan:
+1. Crea tu cuenta y dominio/subdominio en InfinityFree.
+2. Entra a **File Manager** o conecta por FTP.
+3. Sube el proyecto completo dentro de `htdocs/`.
+4. Verifica que existan y tengan permisos de escritura:
    - `htdocs/data/products.json`
    - `htdocs/uploads/`
-4. Prueba:
-   - `https://tecnomed.infinityfreeapp.com/`
-   - `https://tecnomed.infinityfreeapp.com/admin.php`
+5. Prueba tu dominio:
+   - `https://tu-dominio/`
+   - `https://tu-dominio/admin.php`
+
+Ejemplo para este proyecto: `https://tecnomed.infinityfreeapp.com/`.
 
 Para el paso a paso completo, revisa: **`INFINITYFREE_SETUP.md`**.
 
