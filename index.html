@@ -10,7 +10,6 @@
   <header class="topbar">
     <h1>TecnoMed</h1>
     <p>Catálogo de categorías y productos médicos/tecnológicos</p>
-    <a class="admin-link" href="admin.html">Gestionar productos (HTML)</a>
   </header>
 
   <main class="container">
@@ -37,100 +36,6 @@
     </section>
   </main>
 
-  <script>
-    const BASE_CATEGORIES = [
-      'Cuidados',
-      'Diagnostico',
-      'Emergencia',
-      'Equipos',
-      'Intrumental',
-      'Insumos',
-      'Mobiliario',
-      'Indumentaria',
-      'Oxigenoterapia'
-    ];
-
-    const categoriesEl = document.getElementById('categories');
-    const productsEl = document.getElementById('products');
-    const emptyStateEl = document.getElementById('emptyState');
-    let allProducts = [];
-    const STORAGE_KEY = 'tecnomed_products';
-    const chipSelector = '#categories .chip';
-
-    function bindCategoryEvents() {
-      const chips = document.querySelectorAll(chipSelector);
-      chips.forEach(chip => {
-        chip.onclick = () => {
-          chips.forEach(c => c.classList.remove('active'));
-          chip.classList.add('active');
-          const selectedCategory = chip.dataset.category || '';
-          if (!selectedCategory) {
-            renderProducts(allProducts);
-            return;
-          }
-          renderProducts(allProducts.filter(p => p.category === selectedCategory));
-        };
-      });
-    }
-
-    function renderCategories(products) {
-      const extraCategories = [...new Set(products.map(p => p.category).filter(Boolean))]
-        .filter(c => !BASE_CATEGORIES.includes(c));
-      extraCategories.forEach(category => {
-        const btn = document.createElement('button');
-        btn.textContent = category;
-        btn.className = 'chip';
-        btn.dataset.category = category;
-        categoriesEl.appendChild(btn);
-      });
-
-      bindCategoryEvents();
-    }
-
-    function renderProducts(products) {
-      productsEl.innerHTML = '';
-      if (!products.length) {
-        emptyStateEl.classList.remove('hidden');
-        return;
-      }
-      emptyStateEl.classList.add('hidden');
-
-      products.forEach(product => {
-        const card = document.createElement('article');
-        card.className = 'card';
-        card.innerHTML = `
-          <img src="${product.image || 'https://via.placeholder.com/600x400?text=TecnoMed'}" alt="${product.name}" />
-          <h3>${product.name}</h3>
-          <p><strong>Categoría:</strong> ${product.category}</p>
-          <p>${product.description || 'Sin descripción'}</p>
-          <p><strong>Precio:</strong> $${Number(product.price).toFixed(2)}</p>
-          <p><strong>Stock:</strong> ${product.stock}</p>
-        `;
-        productsEl.appendChild(card);
-      });
-    }
-
-    bindCategoryEvents();
-
-    const localProducts = localStorage.getItem(STORAGE_KEY);
-    if (localProducts) {
-      allProducts = JSON.parse(localProducts);
-      renderCategories(allProducts);
-      renderProducts(allProducts);
-    } else {
-      fetch('data/products.json')
-        .then(res => res.json())
-        .then(data => {
-          allProducts = Array.isArray(data) ? data : [];
-          renderCategories(allProducts);
-          renderProducts(allProducts);
-        })
-        .catch(() => {
-          renderCategories([]);
-          emptyStateEl.classList.remove('hidden');
-          emptyStateEl.textContent = 'Error al cargar productos.';
-        });
-    }
-  </script>
+  <script src="app.js"></script>
 </body>
 </html>
