@@ -88,7 +88,7 @@ body {
 
 label { display: grid; gap: .35rem; }
 
-input, textarea, button {
+input, select, textarea, button {
   font: inherit;
   padding: .55rem;
   border-radius: .5rem;
@@ -113,3 +113,11 @@ button {
 .inline-form { display: flex; gap: .5rem; align-items: center; }
 .empty, .msg { color: var(--muted); }
 .hidden { display: none; }
+
+
+.actions-row {
+  display: flex;
+  gap: .6rem;
+  margin-top: .8rem;
+  flex-wrap: wrap;
+}

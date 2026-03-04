@@ -10,13 +10,24 @@
   <header class="topbar">
     <h1>TecnoMed</h1>
     <p>Catálogo de categorías y productos médicos/tecnológicos</p>
-    <a class="admin-link" href="admin.php">Gestionar productos (PHP)</a>
+    <a class="admin-link" href="admin.html">Gestionar productos (HTML)</a>
   </header>
 
   <main class="container">
     <section>
       <h2>Categorías</h2>
-      <div id="categories" class="category-grid"></div>
+      <div id="categories" class="category-grid">
+        <button class="chip active" data-category="">Todas</button>
+        <button class="chip" data-category="Cuidados">Cuidados</button>
+        <button class="chip" data-category="Diagnostico">Diagnostico</button>
+        <button class="chip" data-category="Emergencia">Emergencia</button>
+        <button class="chip" data-category="Equipos">Equipos</button>
+        <button class="chip" data-category="Intrumental">Intrumental</button>
+        <button class="chip" data-category="Insumos">Insumos</button>
+        <button class="chip" data-category="Mobiliario">Mobiliario</button>
+        <button class="chip" data-category="Indumentaria">Indumentaria</button>
+        <button class="chip" data-category="Oxigenoterapia">Oxigenoterapia</button>
+      </div>
     </section>
 
     <section>
@@ -27,36 +38,53 @@
   </main>
 
   <script>
+    const BASE_CATEGORIES = [
+      'Cuidados',
+      'Diagnostico',
+      'Emergencia',
+      'Equipos',
+      'Intrumental',
+      'Insumos',
+      'Mobiliario',
+      'Indumentaria',
+      'Oxigenoterapia'
+    ];
+
     const categoriesEl = document.getElementById('categories');
     const productsEl = document.getElementById('products');
     const emptyStateEl = document.getElementById('emptyState');
     let allProducts = [];
+    const STORAGE_KEY = 'tecnomed_products';
+    const chipSelector = '#categories .chip';
+
+    function bindCategoryEvents() {
+      const chips = document.querySelectorAll(chipSelector);
+      chips.forEach(chip => {
+        chip.onclick = () => {
+          chips.forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          const selectedCategory = chip.dataset.category || '';
+          if (!selectedCategory) {
+            renderProducts(allProducts);
+            return;
+          }
+          renderProducts(allProducts.filter(p => p.category === selectedCategory));
+        };
+      });
+    }
 
     function renderCategories(products) {
-      const categories = [...new Set(products.map(p => p.category))];
-      categoriesEl.innerHTML = '';
-
-      const allBtn = document.createElement('button');
-      allBtn.textContent = 'Todas';
-      allBtn.className = 'chip active';
-      allBtn.onclick = () => {
-        document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-        allBtn.classList.add('active');
-        renderProducts(allProducts);
-      };
-      categoriesEl.appendChild(allBtn);
-
-      categories.forEach(category => {
+      const extraCategories = [...new Set(products.map(p => p.category).filter(Boolean))]
+        .filter(c => !BASE_CATEGORIES.includes(c));
+      extraCategories.forEach(category => {
         const btn = document.createElement('button');
         btn.textContent = category;
         btn.className = 'chip';
-        btn.onclick = () => {
-          document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-          btn.classList.add('active');
-          renderProducts(allProducts.filter(p => p.category === category));
-        };
+        btn.dataset.category = category;
         categoriesEl.appendChild(btn);
       });
+
+      bindCategoryEvents();
     }
 
     function renderProducts(products) {
